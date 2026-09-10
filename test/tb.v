@@ -24,15 +24,17 @@ module tb ();
   wire [7:0] uio_oe;
 
   // Replace tt_um_example with your module name:
-  tt_um_example user_project (
-      .ui_in  (ui_in),    // Dedicated inputs
-      .uo_out (uo_out),   // Dedicated outputs
-      .uio_in (uio_in),   // IOs: Input path
-      .uio_out(uio_out),  // IOs: Output path
-      .uio_oe (uio_oe),   // IOs: Enable path (active high: 0=input, 1=output)
-      .ena    (ena),      // enable - goes high when design is selected
-      .clk    (clk),      // clock
-      .rst_n  (rst_n)     // not reset
-  );
-
+   ALU_design user_project (
+       .A(ui_in[3:0]),             // A gets bits 0 to 3 of ui_in
+       .B(ui_in[7:4]),             // B gets bits 4 to 7 of ui_in
+       .Sel(uio_in[2:0]),          // Sel gets bits 0 to 2 of uio_in
+       .Ainvert(uio_in[3]),        // Ainvert gets bit 3
+       .Binvert(uio_in[4]),        // Binvert gets bit 4
+       .Cin(uio_in[5]),            // Cin gets bit 5
+       .Result(uo_out[3:0]),       // Result goes to bits 0 to 3 of uo_out
+       .Cout(uo_out[4]),           // Cout goes to bit 4
+       .Set(uo_out[5]),            // Set goes to bit 5
+       .Overflow(uo_out[6]),       // Overflow goes to bit 6
+       .Zero(uo_out[7])            // Zero goes to bit 7
+   );
 endmodule
